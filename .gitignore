@@ -43,3 +43,7 @@ yarn-error.log*
 
 pnpm-lock.yaml
 .vscode
+.env*
+.flaskenv*
+.env.project
+.env.vault
