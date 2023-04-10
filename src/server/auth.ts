@@ -3,7 +3,6 @@ import {
   getServerSession,
   type NextAuthOptions,
   type DefaultSession,
-  type Profile,
 } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
@@ -46,22 +45,25 @@ declare module "next-auth" {
  */
 export const authOptions: NextAuthOptions = {
   callbacks: {
-    session: ({ session, user }) => ({
-      ...session,
-      user: {
-        ...session.user,
-        id: user.id,
-      },
-    }),
-    signIn: ({ account, profile }): boolean => {
+    signIn: async ({ account, profile }): Promise<boolean> => {
       if (account?.provider === "google") {
-        return (profile &&
-          profile.email_verified &&
-          profile.email?.endsWith("@sirius.com.ar")) as boolean;
+        return Promise.resolve(
+          (profile &&
+            profile.email_verified &&
+            profile.email?.endsWith("@sirius.com.ar")) as boolean
+        );
       }
       // For now only allow Google sign in
-      return false;
+      return Promise.resolve(false);
     },
+    session: async ({ session, user }) =>
+      Promise.resolve({
+        ...session,
+        user: {
+          ...session.user,
+          id: user.id,
+        },
+      }),
   },
   adapter: PrismaAdapter(prisma),
   providers: [
