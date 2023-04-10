@@ -55,7 +55,7 @@ const Claims: NextPage = () => {
                 <td className="relative">
                   <Image
                     src={claim.hat.imageUrl}
-                    alt={`The "${claim.hat.name}" hat image`}
+                    alt="The hat image"
                     fill
                     className="object-contain"
                   />
@@ -89,7 +89,13 @@ const Claims: NextPage = () => {
                     <span className="opacity-50">Not claimed</span>
                   )}
                 </td>
-                <td>{new Date(claim.claimedAt).toDateString()}</td>
+                <td>
+                  {!!claim.claimedAt ? (
+                    new Date(claim.claimedAt).toDateString()
+                  ) : (
+                    <span className="opacity-50">Not claimed</span>
+                  )}
+                </td>
               </tr>
             ))}
         </tbody>
