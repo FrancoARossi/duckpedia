@@ -1,5 +1,5 @@
 # Duckpedia
 
-![Vercel](https://vercelbadge.vercel.app/api/FrancoARossi/duckpedia)
+![Vercel](http://therealsujitk-vercel-badge.vercel.app/?app=duckpedia)
 
 **[Duckpedia Website](https://duckpedia.vercel.app/)**
