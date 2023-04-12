@@ -74,9 +74,11 @@ model Claim {
 }
 
 model Hat {
-  id        String   @id @default(cuid())
-  createdAt DateTime @default(now())
-  name      String
-  imageUrl  String
-  claim     Claim?
+  id         String   @id @default(cuid())
+  createdAt  DateTime @default(now())
+  name       String
+  imageUrl   String
+  note       String?
+  unlockable Boolean  @default(false)
+  claim      Claim?
 }

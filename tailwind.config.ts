@@ -19,6 +19,9 @@ export default {
           },
         },
       },
+      transitionProperty: {
+        'backdrop-filter': 'backdrop-filter',
+       }
     },
   },
   plugins: [],
