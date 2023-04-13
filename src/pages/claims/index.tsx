@@ -132,34 +132,36 @@ const ClaimModalContent = ({ closeModal }: { closeModal: () => void }) => {
     onSuccess: () => {
       trpcUtils.claims.getAll.setData(
         undefined,
-        (claims: ClaimWithHatAndUser[]) => {
-          const claimerIds = claims?.map(
-            (claim) => claim.claimedById as string
-          );
-          if (session && claimerIds?.includes(session.user.id)) {
-            return claims?.map((claim) => {
-              if (claim.claimedById === session?.user.id) {
-                return {
-                  ...claim,
-                  claimedAt: new Date(),
+        (claims: ClaimWithHatAndUser[] | undefined) => {
+          if (claims) {
+            const claimerIds = claims?.map(
+              (claim) => claim.claimedById as string
+            );
+            if (session && claimerIds?.includes(session.user.id)) {
+              return claims?.map((claim) => {
+                if (claim.claimedById === session?.user.id) {
+                  return {
+                    ...claim,
+                    claimedAt: new Date(),
+                    hat: selectedHat as Hat,
+                    hatId: selectedHat?.id as string,
+                  };
+                }
+                return claim;
+              });
+            } else {
+              return [
+                {
+                  id: new Date().toISOString(),
                   hat: selectedHat as Hat,
                   hatId: selectedHat?.id as string,
-                };
-              }
-              return claim;
-            });
-          } else {
-            return [
-              {
-                id: new Date().toISOString(),
-                hat: selectedHat as Hat,
-                hatId: selectedHat?.id as string,
-                claimedBy: session?.user,
-                claimedById: session?.user.id,
-                claimedAt: new Date(),
-              } as Claim,
-              ...claims,
-            ] as Claim[];
+                  claimedBy: session?.user,
+                  claimedById: session?.user.id,
+                  claimedAt: new Date(),
+                } as ClaimWithHatAndUser,
+                ...claims,
+              ] as ClaimWithHatAndUser[];
+            }
           }
         }
       );
