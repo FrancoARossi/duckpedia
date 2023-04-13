@@ -1,7 +1,7 @@
 import { type GetServerSidePropsContext, type NextPage } from "next";
 import { api } from "~/utils/api";
 import requireAuthentication from "~/utils/requireAuthentication";
-import type { User, Hat } from "@prisma/client";
+import type { Claim, Hat, User } from "@prisma/client";
 import Image from "next/image";
 import Button from "~/components/Button";
 import {
@@ -9,18 +9,13 @@ import {
   useEffect,
   useState,
   useContext,
-  SyntheticEvent,
+  type SyntheticEvent,
 } from "react";
-import type { ClaimedHat } from "~/types";
+import type { ClaimWithHatAndUser, ClaimedHat } from "~/types";
 import Dropdown from "~/components/Dropdown";
 import { ModalProviderContext } from "~/components/ModalProvider";
-
-export type Claim = {
-  id: number;
-  hat: Hat;
-  claimedBy: User;
-  claimDate: string;
-};
+import type { Session } from "next-auth";
+import { useSession } from "next-auth/react";
 
 const Claims: NextPage = () => {
   const { data: claims, isLoading, isError } = api.claims.getAll.useQuery();
@@ -129,8 +124,47 @@ const ClaimModalContent = ({ closeModal }: { closeModal: () => void }) => {
     isLoading,
     isError,
   } = api.hats.getAllWithClaims.useQuery();
+  const trpcUtils = api.useContext();
   const [selectedHat, setSelectedHat] = useState<Hat | null>(null);
-  const { mutate: claimHat } = api.claims.claimHat.useMutation();
+  const { data: session }: { data: Session | null } = useSession();
+
+  const { mutate: claimHat } = api.claims.claimHat.useMutation({
+    onSuccess: () => {
+      trpcUtils.claims.getAll.setData(
+        undefined,
+        (claims: ClaimWithHatAndUser[]) => {
+          const claimerIds = claims?.map(
+            (claim) => claim.claimedById as string
+          );
+          if (session && claimerIds?.includes(session.user.id)) {
+            return claims?.map((claim) => {
+              if (claim.claimedById === session?.user.id) {
+                return {
+                  ...claim,
+                  claimedAt: new Date(),
+                  hat: selectedHat as Hat,
+                  hatId: selectedHat?.id as string,
+                };
+              }
+              return claim;
+            });
+          } else {
+            return [
+              {
+                id: new Date().toISOString(),
+                hat: selectedHat as Hat,
+                hatId: selectedHat?.id as string,
+                claimedBy: session?.user,
+                claimedById: session?.user.id,
+                claimedAt: new Date(),
+              } as Claim,
+              ...claims,
+            ] as Claim[];
+          }
+        }
+      );
+    },
+  });
 
   useEffect(() => {
     if (hats && hats.length > 0) {
