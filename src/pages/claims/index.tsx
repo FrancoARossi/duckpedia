@@ -3,9 +3,17 @@ import { api } from "~/utils/api";
 import requireAuthentication from "~/utils/requireAuthentication";
 import type { User, Hat } from "@prisma/client";
 import Image from "next/image";
-import Button from "~/components/button";
-import { useState } from "react";
-import Modal from "~/components/modal";
+import Button from "~/components/Button";
+import {
+  useCallback,
+  useEffect,
+  useState,
+  useContext,
+  SyntheticEvent,
+} from "react";
+import type { ClaimedHat } from "~/types";
+import Dropdown from "~/components/Dropdown";
+import { ModalProviderContext } from "~/components/ModalProvider";
 
 export type Claim = {
   id: number;
@@ -15,24 +23,21 @@ export type Claim = {
 };
 
 const Claims: NextPage = () => {
-  const [openClaimModal, setOpenClaimModal] = useState<boolean>(false);
   const { data: claims, isLoading, isError } = api.claims.getAll.useQuery();
+  const { setModalProps } = useContext(ModalProviderContext);
 
-  const handleOpenClaimModal = () => setOpenClaimModal(true);
+  const handleCloseClaimModal = () => setModalProps({ open: false });
 
-  const handleCloseClaimModal = () => setOpenClaimModal(false);
-
-  const handleSubmitClaim = () => {
-    handleCloseClaimModal();
-  };
+  const handleOpenClaimModal = () =>
+    setModalProps({
+      open: true,
+      title: "Choose wisely...",
+      onClose: handleCloseClaimModal,
+      content: <ClaimModalContent closeModal={handleCloseClaimModal} />,
+    });
 
   return (
     <>
-      <Modal
-        open={openClaimModal}
-        onSubmit={handleSubmitClaim}
-        onClose={handleCloseClaimModal}
-      />
       <div className="flex h-[80%] w-full max-w-7xl animate-fade-in flex-col gap-8 overflow-hidden rounded-xl bg-white px-4 py-8 drop-shadow">
         <div className="flex flex-row items-center justify-between px-8">
           <h1 className="text-3xl font-extralight">Hat Ownerships</h1>
@@ -115,6 +120,68 @@ const Claims: NextPage = () => {
         </table>
       </div>
     </>
+  );
+};
+
+const ClaimModalContent = ({ closeModal }: { closeModal: () => void }) => {
+  const {
+    data: hats,
+    isLoading,
+    isError,
+  } = api.hats.getAllWithClaims.useQuery();
+  const [selectedHat, setSelectedHat] = useState<Hat | null>(null);
+  const { mutate: claimHat } = api.claims.claimHat.useMutation();
+
+  useEffect(() => {
+    if (hats && hats.length > 0) {
+      setSelectedHat(hats.find((hat) => !hat.claim) || null);
+    }
+  }, [hats]);
+
+  const filterHats: (hats: (ClaimedHat | Hat)[]) => (ClaimedHat | Hat)[] =
+    useCallback(
+      (hats: (ClaimedHat | Hat)[]) => {
+        return hats?.filter((hat) => hat.id !== selectedHat?.id);
+      },
+      [selectedHat]
+    );
+
+  const handleSubmit = (e: SyntheticEvent) => {
+    e.preventDefault();
+    if (!!selectedHat) {
+      claimHat(selectedHat.id);
+      closeModal();
+    }
+  };
+
+  return (
+    <form
+      className="flex h-full w-full flex-col items-center"
+      onSubmit={handleSubmit}
+    >
+      {isLoading && (
+        <div className="flex items-center justify-center">
+          <div className="loader mb-4 h-6 w-6 rounded-full border-4 border-t-4 border-gray-200 ease-linear"></div>
+        </div>
+      )}
+      {isError && (
+        <div className="flex items-center justify-center">
+          <p>An error has occur</p>
+        </div>
+      )}
+      {!!hats && (
+        <div className="flex h-full w-full items-center justify-center">
+          <Dropdown
+            options={filterHats(hats)}
+            selected={selectedHat}
+            onChange={setSelectedHat}
+          />
+        </div>
+      )}
+      <div className="bottom-0 flex items-end justify-end self-end">
+        <Button label="Claim!" disabled={!selectedHat} />
+      </div>
+    </form>
   );
 };
 

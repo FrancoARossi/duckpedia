@@ -1,8 +1,8 @@
-import { type NextPage } from "next";
-import { signIn, signOut, useSession } from "next-auth/react";
+import type { GetServerSidePropsContext, NextPage } from "next";
+import type { Session } from "next-auth";
+import { getSession, signIn, signOut, useSession } from "next-auth/react";
 
 const Home: NextPage = () => {
-
   return (
     <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c]">
       <AuthShowcase />
@@ -35,4 +35,23 @@ const AuthShowcase: React.FC = () => {
       </button>
     </div>
   );
+};
+
+export const getServerSideProps = async (
+  context: GetServerSidePropsContext
+) => {
+  const session: Session | null = await getSession(context);
+
+  if (session) {
+    return {
+      redirect: {
+        destination: "/claims",
+      },
+      props: {},
+    };
+  }
+
+  return {
+    props: {},
+  };
 };

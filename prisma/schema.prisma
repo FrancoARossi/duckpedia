@@ -62,15 +62,14 @@ model User {
 }
 
 model Claim {
-  id        String    @id @default(cuid())
-  claimedAt DateTime?
-  claimedBy User?     @relation(fields: [userId], references: [id])
-  hat       Hat       @relation(fields: [hatId], references: [id])
-  userId    String?   @unique
-  hatId     String    @unique
+  id          String    @id @default(cuid())
+  claimedAt   DateTime? @default(now())
+  claimedBy   User?     @relation(fields: [claimedById], references: [id])
+  hat         Hat       @relation(fields: [hatId], references: [id])
+  claimedById String?   @unique
+  hatId       String    @unique
 
-  @@index([userId])
-  @@index([hatId])
+  @@unique([claimedById, hatId])
 }
 
 model Hat {
