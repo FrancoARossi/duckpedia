@@ -153,7 +153,7 @@ const ClaimModalContent = ({ closeModal }: { closeModal: () => void }) => {
                   id: new Date().toISOString(),
                   hat: selectedHat as Hat,
                   hatId: selectedHat?.id as string,
-                  claimedBy: session?.user,
+                  claimedBy: session?.user as User,
                   claimedById: session?.user.id,
                   claimedAt: new Date(),
                 } as ClaimWithHatAndUser,
