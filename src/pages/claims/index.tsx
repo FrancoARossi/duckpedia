@@ -132,7 +132,9 @@ const ClaimModalContent = ({ closeModal }: { closeModal: () => void }) => {
     onSuccess: () => {
       trpcUtils.claims.getAll.setData(
         undefined,
-        (claims: ClaimWithHatAndUser[] | undefined) => {
+        (
+          claims: (Claim & { hat: Hat; claimedBy: User | null })[] | undefined
+        ) => {
           if (claims) {
             const claimerIds = claims?.map((claim) => claim.claimedBy?.id);
             if (session && claimerIds?.includes(session.user.id)) {
@@ -152,13 +154,13 @@ const ClaimModalContent = ({ closeModal }: { closeModal: () => void }) => {
                 {
                   id: new Date().toISOString(),
                   hat: selectedHat as Hat,
-                  hatId: selectedHat?.id,
+                  hatId: selectedHat?.id as string,
                   claimedBy: session?.user as User | null,
-                  claimedById: session?.user.id,
+                  claimedById: session?.user.id as string,
                   claimedAt: new Date(),
-                } as ClaimWithHatAndUser,
+                } as Claim & { hat: Hat; claimedBy: User | null },
                 ...claims,
-              ] as ClaimWithHatAndUser[];
+              ] as (Claim & { hat: Hat; claimedBy: User | null })[];
             }
           }
         }
