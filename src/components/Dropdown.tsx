@@ -41,7 +41,7 @@ const Dropdown = ({ onChange, options, selected }: DropdownProps) => {
           role="listbox"
           aria-labelledby="listbox-label"
           aria-activedescendant="listbox-item-3"
-          className="shadow-xs absolute z-10 mt-1 max-h-48 w-full overflow-auto rounded-md bg-white text-base leading-6 shadow-lg focus:outline-none sm:text-sm sm:leading-5"
+          className="absolute z-10 mt-1 max-h-48 w-full overflow-auto rounded-md bg-white text-base leading-6 shadow-lg focus:outline-none sm:text-sm sm:leading-5"
         >
           {options?.map((option) => {
             const isClaimed = !!(option as ClaimedHat).claim;

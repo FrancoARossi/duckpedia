@@ -9,6 +9,7 @@ import Head from "next/head";
 import { Poppins } from "next/font/google";
 import MainLayout from "~/layouts/MainLayout";
 import ModalProvider from "~/components/ModalProvider";
+import NavBar from "~/components/NavBar";
 
 const poppins = Poppins({
   weight: ["200", "400", "500", "700"],
@@ -36,9 +37,12 @@ const MyApp: AppType<{ session: Session | null }> = ({
       </Head>
       <SessionProvider session={session}>
         <ModalProvider>
-          <MainLayout>
-            <Component {...pageProps} />
-          </MainLayout>
+          {session && <NavBar />}
+          <div className="h-full w-full bg-slate-100">
+            <MainLayout>
+              <Component {...pageProps} />
+            </MainLayout>
+          </div>
         </ModalProvider>
       </SessionProvider>
     </>

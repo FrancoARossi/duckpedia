@@ -16,6 +16,7 @@ import Dropdown from "~/components/Dropdown";
 import { ModalProviderContext } from "~/components/ModalProvider";
 import type { Session } from "next-auth";
 import { useSession } from "next-auth/react";
+import { formatDate } from "~/utils/formatDate";
 
 const Claims: NextPage = () => {
   const { data: claims, isLoading, isError } = api.claims.getAll.useQuery();
@@ -104,7 +105,7 @@ const Claims: NextPage = () => {
                   </td>
                   <td>
                     {!!claim.claimedAt ? (
-                      new Date(claim.claimedAt).toDateString()
+                      <span>{formatDate(claim.claimedAt)}</span>
                     ) : (
                       <span className="opacity-50">Not claimed</span>
                     )}
@@ -132,9 +133,7 @@ const ClaimModalContent = ({ closeModal }: { closeModal: () => void }) => {
     onSuccess: () => {
       trpcUtils.claims.getAll.setData(
         undefined,
-        (
-          claims: ClaimWithHatAndUser[] | undefined
-        ) => {
+        (claims: ClaimWithHatAndUser[] | undefined) => {
           if (claims) {
             const claimerIds = claims?.map((claim) => claim.claimedBy?.id);
             if (session && claimerIds?.includes(session.user.id)) {
