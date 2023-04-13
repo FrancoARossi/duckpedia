@@ -7,4 +7,6 @@ export type ClaimedHat = Prisma.HatGetPayload<{
 export type ClaimWithHatAndUser = Claim & {
   hat: Hat;
   claimedBy: User | null;
+  hatId: string | null;
+  claimedById: string | null;
 };
