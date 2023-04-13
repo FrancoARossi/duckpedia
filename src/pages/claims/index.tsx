@@ -134,12 +134,10 @@ const ClaimModalContent = ({ closeModal }: { closeModal: () => void }) => {
         undefined,
         (claims: ClaimWithHatAndUser[] | undefined) => {
           if (claims) {
-            const claimerIds = claims?.map(
-              (claim) => claim.claimedById as string
-            );
+            const claimerIds = claims?.map((claim) => claim.claimedBy?.id);
             if (session && claimerIds?.includes(session.user.id)) {
               return claims?.map((claim) => {
-                if (claim.claimedById === session?.user.id) {
+                if (claim.claimedBy?.id === session?.user.id) {
                   return {
                     ...claim,
                     claimedAt: new Date(),
