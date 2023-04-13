@@ -1,7 +1,7 @@
 import { type GetServerSidePropsContext, type NextPage } from "next";
 import { api } from "~/utils/api";
 import requireAuthentication from "~/utils/requireAuthentication";
-import type { Claim, Hat, User } from "@prisma/client";
+import type { Hat, User } from "@prisma/client";
 import Image from "next/image";
 import Button from "~/components/Button";
 import {
@@ -133,7 +133,7 @@ const ClaimModalContent = ({ closeModal }: { closeModal: () => void }) => {
       trpcUtils.claims.getAll.setData(
         undefined,
         (
-          claims: (Claim & { hat: Hat; claimedBy: User | null })[] | undefined
+          claims: ClaimWithHatAndUser[] | undefined
         ) => {
           if (claims) {
             const claimerIds = claims?.map((claim) => claim.claimedBy?.id);
@@ -158,9 +158,9 @@ const ClaimModalContent = ({ closeModal }: { closeModal: () => void }) => {
                   claimedBy: session?.user as User | null,
                   claimedById: session?.user.id as string,
                   claimedAt: new Date(),
-                } as Claim & { hat: Hat; claimedBy: User | null },
+                } as ClaimWithHatAndUser,
                 ...claims,
-              ] as (Claim & { hat: Hat; claimedBy: User | null })[];
+              ] as ClaimWithHatAndUser[];
             }
           }
         }
