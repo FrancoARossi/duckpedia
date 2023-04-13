@@ -1,4 +1,4 @@
-import { useReducer, type ReactNode, useRef, SyntheticEvent } from "react";
+import { type ReactNode, useRef } from "react";
 
 type ButtonProps = {
   label?: string;

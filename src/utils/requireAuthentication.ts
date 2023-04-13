@@ -13,6 +13,8 @@ const requireAuthentication = async (
   callback: AuthenticationCallback
 ) => {
   const session: Session | null = await getSession(context);
+  console.log("Auth");
+  console.log("session", session);
   if (!session) {
     return {
       redirect: {

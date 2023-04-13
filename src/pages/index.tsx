@@ -41,6 +41,8 @@ export const getServerSideProps = async (
   context: GetServerSidePropsContext
 ) => {
   const session: Session | null = await getSession(context);
+  console.log("INDEX");
+  console.log("session", session);
 
   if (session) {
     return {
