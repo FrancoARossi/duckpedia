@@ -29,6 +29,12 @@ const NAV_ITEMS = [
     href: "/hall-of-shame",
     disabled: true,
   },
+  {
+    id: "nav_tips_n_tricks",
+    label: "Tips n' Tricks",
+    href: "https://duckgame.fandom.com/wiki/Category:Tips_and_Tricks",
+    target: "_blank",
+  },
 ];
 
 const NavBar = () => {
@@ -58,6 +64,7 @@ const NavBar = () => {
                           : ""
                       } relative flex h-12 items-center justify-center font-bold uppercase text-slate-700`}
                       href={navItem.href}
+                      target={navItem.target}
                     >
                       {navItem.label}
                     </a>

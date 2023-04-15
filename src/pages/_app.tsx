@@ -38,11 +38,13 @@ const MyApp: AppType<{ session: Session | null }> = ({
       <SessionProvider session={session}>
         <ModalProvider>
           {session && <NavBar />}
-          <div className="h-full w-full bg-slate-100">
+          {!!session ? (
             <MainLayout>
               <Component {...pageProps} />
             </MainLayout>
-          </div>
+          ) : (
+            <Component {...pageProps} />
+          )}
         </ModalProvider>
       </SessionProvider>
     </>

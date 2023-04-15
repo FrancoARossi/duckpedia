@@ -4,8 +4,10 @@ import { getSession, signIn, signOut, useSession } from "next-auth/react";
 
 const Home: NextPage = () => {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c]">
-      <AuthShowcase />
+    <main className="flex h-full flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c]">
+      <div className="flex h-[80%] w-[70%] max-w-xl animate-fade-in flex-col justify-center gap-8 overflow-hidden rounded-xl bg-white px-4 py-8 drop-shadow">
+        <AuthShowcase />
+      </div>
     </main>
   );
 };
@@ -17,11 +19,11 @@ const AuthShowcase: React.FC = () => {
 
   return (
     <div className="flex flex-col items-center justify-center gap-4">
-      <p className="text-center text-2xl text-white">
+      <p className="text-center text-2xl text-black">
         {sessionData && <span>Logged in as {sessionData.user?.name}</span>}
       </p>
       <button
-        className="rounded-full bg-white/10 px-10 py-3 font-semibold text-white no-underline transition hover:bg-white/20"
+        className="rounded-full bg-gray-200 px-10 py-3 font-semibold text-black no-underline transition hover:bg-gray-300"
         onClick={
           sessionData
             ? () => void signOut()
