@@ -1,31 +1,51 @@
 import type { GetServerSidePropsContext, NextPage } from "next";
 import type { Session } from "next-auth";
 import { getSession, signIn } from "next-auth/react";
-import Image from "next/image";
+import Image, { type StaticImageData } from "next/image";
 import googleLogo from "~/assets/btn_google_light_normal_ios.svg";
+import duckGameBg from "~/assets/duck_game_bg_1.jpg";
 
 const Home: NextPage = () => {
   return (
-    <main className="flex h-full flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c]">
-      <div className="flex h-[60%] w-[70%] max-w-xl animate-fade-in flex-col justify-center gap-8 overflow-hidden rounded-xl bg-white/50 px-4 py-8 drop-shadow">
-        <div className="flex h-full flex-col justify-around">
-          <div className="flex flex-col items-center gap-2">
-            <h1 className="text-3xl font-extralight">Duckpedia 🦆</h1>
-            <p className="text-lg text-zinc-700">
+    <main className="flex h-full flex-col items-center justify-center bg-gradient-to-b">
+      <Image
+        fill
+        priority
+        src={duckGameBg}
+        className="object-cover"
+        alt="Google logo"
+      />
+      <div className="absolute inset-0 bg-black/[35%]" />
+      <div className="flex h-[80%] z-10 max-h-[600px] w-full max-w-md animate-fade-in flex-col justify-center gap-8 overflow-hidden rounded-xl bg-white/50 px-4 py-20 shadow-2xl backdrop-blur-sm">
+        <div className="flex h-full flex-col justify-between">
+          <div className="flex flex-col items-center gap-5">
+            <h1 className="text-4xl font-semibold text-slate-900">
+              Duckpedia 🦆
+            </h1>
+            <p className="text-center text-xl text-zinc-900">
               Your go-to source for{" "}
               <a
                 target="_blank"
                 href="https://store.steampowered.com/app/312530/Duck_Game"
+                className="hover:underline text-xl"
               >
                 Duck Game
-              </a>{" "}
-              at{" "}
-              <a target="_blank" href="https://www.sirius.com.ar">
-                Sirius!
               </a>
+              <br />
+              at{" "}
+              <a
+                target="_blank"
+                href="https://www.sirius.com.ar"
+                className="hover:underline text-xl"
+              >
+                Sirius
+              </a>
+              !
             </p>
           </div>
-          <AuthShowcase />
+          <div className="flex h-full items-center justify-center">
+            <SignInButtons />
+          </div>
         </div>
       </div>
     </main>
@@ -34,11 +54,11 @@ const Home: NextPage = () => {
 
 export default Home;
 
-const AuthShowcase: React.FC = () => {
+const SignInButtons: React.FC = () => {
   return (
     <div className="flex flex-col items-center justify-center gap-4">
       <button
-        className="flex items-center rounded-sm gap-3 bg-white px-2 py-2 text-sm font-semibold uppercase text-black/[54%] no-underline transition hover:shadow-lg"
+        className="flex items-center gap-3 rounded-sm bg-white py-2 pl-2 pr-8 text-sm font-semibold uppercase text-black/[80%] no-underline transition hover:shadow-lg"
         onClick={() =>
           void signIn("google", {
             callbackUrl: `/claims`,
@@ -47,7 +67,7 @@ const AuthShowcase: React.FC = () => {
       >
         <Image
           priority
-          src={googleLogo}
+          src={googleLogo as StaticImageData}
           height={32}
           width={32}
           alt="Google logo"
