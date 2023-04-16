@@ -17,6 +17,7 @@ import { ModalProviderContext } from "~/components/ModalProvider";
 import type { Session } from "next-auth";
 import { useSession } from "next-auth/react";
 import { formatDate } from "~/utils/formatDate";
+import SkeletonLoader from "~/components/SkeletonLoader";
 
 const Claims: NextPage = () => {
   const { data: claims, isLoading, isError } = api.claims.getAll.useQuery();
@@ -49,11 +50,17 @@ const Claims: NextPage = () => {
           </tr>
         </thead>
         <tbody style={{ overflow: "overlay" }} className="block h-full">
-          {isLoading && (
-            <tr className="flex items-center justify-center">
-              <td>Loading...</td>
-            </tr>
-          )}
+          {isLoading &&
+            [...Array(3).keys()].map((i) => (
+              <tr
+                key={`skeleton-${i}`}
+                className="flex items-center justify-center"
+              >
+                <td className="w-full">
+                  <SkeletonLoader className="h-[4rem] rounded-md" />
+                </td>
+              </tr>
+            ))}
           {isError && (
             <tr className="flex items-center justify-center">
               <td>An error has occur</td>
@@ -189,16 +196,16 @@ const ClaimModalContent = ({ closeModal }: { closeModal: () => void }) => {
 
   return (
     <form
-      className="flex h-full w-full flex-col items-center"
+      className="grid h-full w-full grid-rows-[1fr,52px]"
       onSubmit={handleSubmit}
     >
       {isLoading && (
-        <div className="flex items-center justify-center">
-          <div className="loader mb-4 h-6 w-6 rounded-full border-4 border-t-4 border-gray-200 ease-linear"></div>
+        <div className="flex h-full w-full items-center justify-center">
+          <SkeletonLoader className="h-20 w-[60%] rounded" />
         </div>
       )}
       {isError && (
-        <div className="flex items-center justify-center">
+        <div className="flex items-center justify-center text-red-500">
           <p>An error has occur</p>
         </div>
       )}
