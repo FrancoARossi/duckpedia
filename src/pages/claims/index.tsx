@@ -34,7 +34,7 @@ const Claims: NextPage = () => {
     });
 
   return (
-    <main className="flex h-[80%] w-full max-w-7xl animate-fade-in flex-col gap-8 overflow-hidden rounded-xl bg-white px-4 py-8 drop-shadow">
+    <main className="flex h-[80%] w-full max-w-7xl animate-fade-in-from-top flex-col gap-8 overflow-hidden rounded-xl bg-white px-4 py-8 drop-shadow">
       <div className="flex flex-row items-center justify-between px-8">
         <h1 className="text-3xl font-extralight">Hat Ownerships</h1>
         <Button label="Claim a Hat" onClick={handleOpenClaimModal} />
