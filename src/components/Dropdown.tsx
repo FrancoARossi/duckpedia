@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import Image from "next/image";
 import type { ClaimedHat } from "~/types";
 import type { Hat } from "@prisma/client";
+import useOutsideClick from "~/hooks/useOutsideClick";
 
 type DropdownProps = {
   onChange: (hat: Hat) => void;
@@ -11,6 +12,13 @@ type DropdownProps = {
 
 const Dropdown = ({ onChange, options, selected }: DropdownProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const ref = useRef<HTMLUListElement>(null);
+
+  useOutsideClick(ref, () => {
+    if (isOpen) {
+      setIsOpen(false);
+    }
+  });
 
   const handleOpen = () => setIsOpen(true);
   const handleClose = () => setIsOpen(false);
@@ -37,11 +45,12 @@ const Dropdown = ({ onChange, options, selected }: DropdownProps) => {
       )}
       {isOpen && (
         <ul
+          ref={ref}
           tabIndex={-1}
           role="listbox"
           aria-labelledby="listbox-label"
           aria-activedescendant="listbox-item-3"
-          className="animate-[fade-in_200ms_ease-out] absolute z-10 mt-1 max-h-48 w-full overflow-auto rounded-md bg-white text-base leading-6 shadow-lg focus:outline-none sm:text-sm sm:leading-5"
+          className="absolute z-10 mt-1 max-h-48 w-full animate-[fade-in_200ms_ease-out] overflow-auto rounded-md bg-white text-base leading-6 shadow-lg focus:outline-none sm:text-sm sm:leading-5"
         >
           {options?.map((option) => {
             const isClaimed = !!(option as ClaimedHat).claim;
