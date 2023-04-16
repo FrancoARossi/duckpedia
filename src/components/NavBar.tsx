@@ -6,6 +6,7 @@ import {
   GiOutbackHat,
   GiSpellBook,
   GiExitDoor,
+  GiDuck,
 } from "react-icons/gi";
 
 const USER_NAV_ITEMS = [
@@ -15,11 +16,13 @@ const USER_NAV_ITEMS = [
     label: "Logout",
     href: "/api/auth/signout",
   },
-  /* {
+  {
+    icon: <GiDuck className="text-3xl" />,
     id: "user_nav_profile",
     label: "Profile",
     href: "/profile",
-  }, */
+    disabled: true,
+  },
 ];
 
 const NAV_ITEMS = [
@@ -81,9 +84,9 @@ const NavBar = () => {
                 {USER_NAV_ITEMS.map((navItem) => (
                   <a
                     key={navItem.id}
-                    className={
-                      "relative flex h-fit w-fit cursor-pointer items-center rounded-lg p-1 text-white/80 transition-all hover:scale-125 hover:bg-white/20 hover:text-white group-hover:w-full"
-                    }
+                    className={`${
+                      navItem.disabled ? "pointer-events-none opacity-50 " : ""
+                    } relative flex h-fit w-fit cursor-pointer items-center rounded-lg p-1 text-white/80 transition-all hover:scale-125 hover:bg-white/20 hover:text-white group-hover:w-full`}
                     href={navItem.href}
                   >
                     {navItem.icon}
@@ -97,8 +100,8 @@ const NavBar = () => {
                 <Image
                   src={session.user.image as string}
                   alt={session.user.name as string}
-                  width={40}
-                  height={40}
+                  width={30}
+                  height={30}
                   className="cursor-pointer rounded-full"
                 />
                 <span className="ml-2 hidden animate-fade-in text-sm font-semibold text-white transition-all group-hover:block">
