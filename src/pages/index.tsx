@@ -2,10 +2,24 @@ import type { GetServerSidePropsContext, NextPage } from "next";
 import type { Session } from "next-auth";
 import { getSession, signIn } from "next-auth/react";
 import Image, { type StaticImageData } from "next/image";
+import { useRouter } from "next/router";
 import googleLogo from "~/assets/btn_google_light_normal_ios.svg";
 import duckGameBg from "~/assets/duck_game_bg_1.jpg";
 
 const Home: NextPage = () => {
+  const router = useRouter();
+
+  const { error } = router.query;
+
+  const getErrorMessage = () => {
+    switch (error) {
+      case "AccessDenied":
+        return "You need a verified @sirius.com.ar email to sign in";
+      default:
+        return "An unknown error occurred.";
+    }
+  };
+
   return (
     <main className="flex h-full flex-col items-center justify-center bg-gradient-to-b">
       <Image
@@ -16,7 +30,7 @@ const Home: NextPage = () => {
         alt="Google logo"
       />
       <div className="absolute inset-0 bg-black/[35%]" />
-      <div className="flex h-[80%] z-10 max-h-[600px] w-full max-w-md animate-fade-in-from-top flex-col justify-center gap-8 overflow-hidden rounded-xl bg-white/50 px-4 py-20 shadow-2xl backdrop-blur-sm">
+      <div className="z-10 flex h-[80%] max-h-[600px] w-full max-w-md animate-fade-in-from-top flex-col justify-center gap-8 overflow-hidden rounded-xl bg-white/50 px-4 py-20 shadow-2xl backdrop-blur-sm">
         <div className="flex h-full flex-col justify-between">
           <div className="flex flex-col items-center gap-5">
             <h1 className="text-4xl font-semibold text-slate-900">
@@ -27,7 +41,7 @@ const Home: NextPage = () => {
               <a
                 target="_blank"
                 href="https://store.steampowered.com/app/312530/Duck_Game"
-                className="hover:underline text-xl"
+                className="text-xl hover:underline"
               >
                 Duck Game
               </a>
@@ -36,12 +50,15 @@ const Home: NextPage = () => {
               <a
                 target="_blank"
                 href="https://www.sirius.com.ar"
-                className="hover:underline text-xl"
+                className="text-xl hover:underline"
               >
                 Sirius
               </a>
               !
             </p>
+            {!!error && (
+              <span className="text-red-600">{getErrorMessage()}</span>
+            )}
           </div>
           <div className="flex h-full items-center justify-center">
             <SignInButtons />
