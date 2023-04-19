@@ -55,6 +55,10 @@ export default {
       transitionProperty: {
         "backdrop-filter": "backdrop-filter",
       },
+      gridTemplateColumns: {
+        "auto-fit": "repeat(auto-fit, minmax(200px, 1fr))",
+        "claims": "repeat(auto-fit, 220px)",
+      }
     },
   },
   plugins: [],

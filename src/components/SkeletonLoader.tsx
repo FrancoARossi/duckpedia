@@ -1,5 +1,5 @@
 const SkeletonLoader: React.FC<{
-  className: string
+  className?: string
 }> = ({ className }) => {
   return (
     <div

@@ -18,10 +18,20 @@ import type { Session } from "next-auth";
 import { useSession } from "next-auth/react";
 import { formatDate } from "~/utils/formatDate";
 import SkeletonLoader from "~/components/SkeletonLoader";
+import Card from "~/components/Card";
+import InputText from "~/components/InputText";
+import useDebounce from "~/hooks/useDebounce";
 
 const Claims: NextPage = () => {
-  const { data: claims, isLoading, isError } = api.claims.getAll.useQuery();
+  const { data: claims, isLoading } = api.claims.getAll.useQuery();
   const { setModalProps } = useContext(ModalProviderContext);
+  const [search, setSearch] = useState<string>("");
+
+  const handleSearch = useCallback((value: string) => {
+    setSearch(value);
+  }, []);
+
+  const debouncedSearch = useDebounce(handleSearch, 500);
 
   const handleCloseClaimModal = () => setModalProps({ open: false });
 
@@ -33,96 +43,94 @@ const Claims: NextPage = () => {
       content: <ClaimModalContent closeModal={handleCloseClaimModal} />,
     });
 
+  const filterClaims = (
+    claims: ClaimWithHatAndUser[]
+  ): ClaimWithHatAndUser[] => {
+    if (!search) return claims;
+    return claims.filter(
+      (claim) =>
+        claim.hat.name.toLowerCase().includes(search.toLowerCase()) ||
+        claim.claimedBy?.name?.toLowerCase().includes(search.toLowerCase()) ||
+        claim.claimedBy?.profileName
+          ?.toLowerCase()
+          .includes(search.toLowerCase()) ||
+        claim.claimedBy?.email?.toLowerCase().includes(search.toLowerCase())
+    );
+  };
+
   return (
-    <main className="flex h-[80%] w-full max-w-7xl animate-fade-in-from-top flex-col gap-8 overflow-hidden rounded-xl bg-white px-4 py-8 drop-shadow">
-      <div className="flex flex-row items-center justify-between px-8">
-        <h1 className="text-3xl font-extralight">Hat Ownerships</h1>
-        <Button label="Claim a Hat" onClick={handleOpenClaimModal} />
+    <main className="flex h-[80%] w-full max-w-7xl animate-fade-in-from-top flex-col gap-8">
+      <div className="flex flex-col gap-2 rounded-md bg-slate-50 px-8 py-4">
+        <div className="flex flex-row items-center justify-between">
+          <h1 className="text-3xl font-extralight">Claimed Hats 🎩</h1>
+          <Button label="Claim a Hat" onClick={handleOpenClaimModal} />
+        </div>
+        <div className="flex gap-4">
+          <InputText
+            defaultValue={search}
+            onChange={(e) => debouncedSearch(e.target.value)}
+          />
+        </div>
       </div>
-      <table className="flex h-full flex-col gap-3">
-        <thead className="block">
-          <tr className="grid grid-cols-5 [&>*]:text-zinc-700">
-            <th>Hat</th>
-            <th>Hat Name</th>
-            <th>Owner</th>
-            <th>Profile Name</th>
-            <th>Claim Date</th>
-          </tr>
-        </thead>
-        <tbody style={{ overflow: "overlay" }} className="block h-full">
-          {isLoading &&
-            [...Array(3).keys()].map((i) => (
-              <tr
-                key={`skeleton-${i}`}
-                className="flex items-center justify-center"
-              >
-                <td className="w-full">
-                  <SkeletonLoader className="h-[4rem] rounded-md" />
-                </td>
-              </tr>
-            ))}
-          {isError && (
-            <tr className="flex items-center justify-center">
-              <td>An error has occur</td>
-            </tr>
-          )}
-          {!!claims &&
-            claims.map((claim) => (
-              <tr
-                key={claim.id}
-                className="grid h-[4rem] grid-cols-5 rounded-md transition-colors hover:bg-slate-100 [&>*]:flex [&>*]:items-center [&>*]:justify-center"
-              >
-                <td className="relative">
-                  <Image
-                    src={claim.hat.imageUrl}
-                    alt="The hat image"
-                    fill
-                    className="object-contain"
-                  />
-                </td>
-                <td>{claim.hat.name}</td>
-                <td>
-                  {claim.claimedBy ? (
-                    <div className="flex items-center gap-2">
-                      {!!claim.claimedBy.image && (
-                        <div className="relative h-9 w-9">
-                          <Image
-                            src={claim.claimedBy.image}
-                            alt="Owner profile picture"
-                            fill
-                            className="rounded-full object-contain"
-                          />
-                        </div>
-                      )}
-                      <span>{claim.claimedBy.name}</span>
-                    </div>
-                  ) : (
-                    <span className="opacity-50">Not claimed</span>
-                  )}
-                </td>
-                <td>
-                  {claim.claimedBy ? (
-                    claim.claimedBy.profileName || (
-                      <span className="opacity-50">No profile name</span>
-                    )
-                  ) : (
-                    <span className="opacity-50">Not claimed</span>
-                  )}
-                </td>
-                <td>
-                  {!!claim.claimedAt ? (
-                    <span>{formatDate(claim.claimedAt)}</span>
-                  ) : (
-                    <span className="opacity-50">Not claimed</span>
-                  )}
-                </td>
-              </tr>
-            ))}
-        </tbody>
-      </table>
+      <section className="grid h-full w-full auto-rows-[300px] grid-cols-claims gap-x-4 gap-y-3 overflow-auto p-2">
+        {isLoading &&
+          [...Array(5).keys()].map((i) => (
+            <SkeletonLoader
+              key={`skeleton_claim_${i}`}
+              className="rounded-md"
+            />
+          ))}
+        {claims &&
+          filterClaims(claims).map((claim) => (
+            <Card key={claim.id} content={<ClaimCardContent claim={claim} />} />
+          ))}
+      </section>
     </main>
   );
 };
+
+const ClaimCardContent: React.FC<{ claim: ClaimWithHatAndUser }> = ({
+  claim,
+}) => (
+  <div className="flex h-full w-full flex-col items-center justify-center">
+    <div className="flex flex-col items-center justify-center gap-2">
+      <h2 className="text-xl font-semibold">{claim.hat.name}</h2>
+      <Image
+        src={claim.hat.imageUrl}
+        alt={claim.hat.name}
+        width={200}
+        height={100}
+        className="object-contain"
+      />
+    </div>
+    <div className="flex w-full flex-col gap-3">
+      <div className="flex w-full flex-col items-center">
+        <h3 className="font-extralight opacity-70">Claimed by</h3>
+        <div className="flex gap-2">
+          <Image
+            src={claim.claimedBy?.image as string}
+            alt={claim.claimedBy?.name as string}
+            width={30}
+            height={30}
+            className="rounded-full"
+          />
+          <div className="flex flex-col justify-center gap-1">
+            <h3 className="font-extralight">{claim.claimedBy?.name}</h3>
+            {claim.claimedBy?.profileName && (
+              <p>{claim.claimedBy?.profileName}</p>
+            )}
+          </div>
+        </div>
+      </div>
+      <div className="flex w-full flex-col items-center">
+        <h3 className="font-extralight opacity-70">Claimed at</h3>
+        <h3 className="font-extralight">
+          {formatDate(claim.claimedAt as Date)}
+        </h3>
+      </div>
+    </div>
+  </div>
+);
 
 const ClaimModalContent = ({ closeModal }: { closeModal: () => void }) => {
   const {
