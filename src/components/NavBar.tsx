@@ -91,11 +91,7 @@ const NavBar = () => {
                       userNavItem.disabled
                         ? "pointer-events-none opacity-50"
                         : "opacity-80"
-                    } relative flex h-fit w-fit cursor-pointer items-center rounded-lg p-1 ${
-                      userNavItem.color || "text-white"
-                    } transition-all hover:scale-125 hover:bg-white/20 hover:${
-                      userNavItem.color || "text-white"
-                    } hover:opacity-100 group-hover/nav:w-full`}
+                    } relative flex h-fit w-fit cursor-pointer items-center rounded-lg p-1 text-white transition-all hover:scale-125 hover:bg-white/20 hover:opacity-100 group-hover/nav:w-full`}
                     href={userNavItem.href}
                   >
                     {userNavItem.icon}
