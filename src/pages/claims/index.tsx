@@ -59,7 +59,7 @@ const Claims: NextPage = () => {
   };
 
   return (
-    <main className="flex h-[80%] w-full max-w-7xl animate-fade-in-from-top flex-col gap-8">
+    <main className="flex h-[80%] w-full max-w-8xl animate-fade-in-from-top flex-col gap-8">
       <div className="flex flex-col gap-2 rounded-md bg-slate-50 px-8 py-4">
         <div className="flex flex-row items-center justify-between">
           <h1 className="text-3xl font-extralight">Claimed Hats 🎩</h1>
@@ -92,16 +92,17 @@ const Claims: NextPage = () => {
 const ClaimCardContent: React.FC<{ claim: ClaimWithHatAndUser }> = ({
   claim,
 }) => (
-  <div className="flex h-full w-full flex-col items-center justify-center">
+  <div className="flex h-full w-full flex-col items-center justify-center gap-2">
     <div className="flex flex-col items-center justify-center gap-2">
       <h2 className="text-xl font-semibold">{claim.hat.name}</h2>
-      <Image
-        src={claim.hat.imageUrl}
-        alt={claim.hat.name}
-        width={200}
-        height={100}
-        className="object-contain"
-      />
+      <div className="relative h-[100px] w-[196px]">
+        <Image
+          src={claim.hat.imageUrl}
+          alt={claim.hat.name}
+          fill
+          className="object-contain"
+        />
+      </div>
     </div>
     <div className="flex w-full flex-col gap-3">
       <div className="flex w-full flex-col items-center">

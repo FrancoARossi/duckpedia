@@ -57,8 +57,11 @@ export default {
       },
       gridTemplateColumns: {
         "auto-fit": "repeat(auto-fit, minmax(200px, 1fr))",
-        "claims": "repeat(auto-fit, 220px)",
-      }
+        claims: "repeat(auto-fit, 220px)",
+      },
+      maxWidth: {
+        "8xl": "90rem", // 1440px
+      },
     },
   },
   plugins: [],
