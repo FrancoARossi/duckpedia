@@ -21,7 +21,7 @@ const InputText: React.FC<InputTextProps> = ({
   return (
     <input
       placeholder={placeholder}
-      className="h-9 w-56 cursor-text rounded-md border border-gray-300 bg-transparent px-2 before:content-[attr(placeholder)] focus-visible:border-gray-400 focus-visible:outline-none"
+      className="h-9 md:w-56 xs:w-full cursor-text rounded-md border border-gray-300 bg-transparent px-2 before:content-[attr(placeholder)] focus-visible:border-gray-400 focus-visible:outline-none"
       type="text"
       value={value}
       onChange={handleChange}

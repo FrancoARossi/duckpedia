@@ -46,7 +46,7 @@ const NavBar = () => {
   const { data: session }: { data: Session | null } = useSession();
 
   return (
-    <nav className="group/nav fixed left-0 top-0 z-50 flex h-screen w-20 animate-fade-in-from-left bg-gray-800 py-8 shadow-[-10px_0_40px_15px_rgba(0,0,0,0.66)] transition-all hover:w-[184px]">
+    <nav className="group/nav fixed left-0 top-0 z-50 flex h-screen w-20 animate-fade-in-from-left bg-gray-800 py-8 shadow-[-10px_0_40px_15px_rgba(0,0,0,0.66)] transition-all hover:w-48">
       <div className="flex h-full w-full flex-col gap-10 px-5 group-hover/nav:items-start">
         <div className="flex h-[38px] w-[38px] cursor-default items-center justify-center gap-2 rounded-lg border border-white/50 p-3 text-xl group-hover/nav:w-full group-hover/nav:justify-start group-hover/nav:px-[6px]">
           <h1>🦆</h1>

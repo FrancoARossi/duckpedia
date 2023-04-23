@@ -59,10 +59,12 @@ const Claims: NextPage = () => {
   };
 
   return (
-    <main className="flex h-[80%] w-full max-w-8xl animate-fade-in-from-top flex-col gap-8">
-      <div className="flex flex-col gap-2 rounded-md bg-slate-50 px-8 py-4">
+    <main className="flex xs:h-[90%] md:h-[80%] w-full max-w-8xl animate-fade-in-from-top flex-col gap-8">
+      <div className="flex flex-col gap-2 rounded-md bg-slate-50 xs:px-4 xs:py-2 md:px-8 md:py-4">
         <div className="flex flex-row items-center justify-between">
-          <h1 className="text-3xl font-extralight">Claimed Hats 🎩</h1>
+          <h1 className="font-extralight xs:text-xl xs:font-bold md:text-3xl">
+            Claimed Hats 🎩
+          </h1>
           <Button label="Claim a Hat" onClick={handleOpenClaimModal} />
         </div>
         <div className="flex gap-4">
@@ -72,7 +74,7 @@ const Claims: NextPage = () => {
           />
         </div>
       </div>
-      <section className="grid h-full w-full auto-rows-[300px] grid-cols-claims gap-x-4 gap-y-3 overflow-auto p-2">
+      <section className="grid h-full w-full auto-rows-[300px] grid-cols-claims gap-x-4 gap-y-3 overflow-auto p-2 xs:justify-center sm:justify-normal">
         {isLoading &&
           [...Array(5).keys()].map((i) => (
             <SkeletonLoader
@@ -82,7 +84,11 @@ const Claims: NextPage = () => {
           ))}
         {claims &&
           filterClaims(claims).map((claim) => (
-            <Card key={claim.id} content={<ClaimCardContent claim={claim} />} />
+            <Card
+              key={claim.id}
+              className="md:max-w-[220px]"
+              content={<ClaimCardContent claim={claim} />}
+            />
           ))}
       </section>
     </main>

@@ -30,7 +30,7 @@ const Button = ({
     <div
       className={`${!!className ? `${className} ` : ""}${
         disabled ? "pointer-events-none opacity-50 " : ""
-      }cursor-pointer min-w-[8rem] rounded-md border-2 border-solid bg-yellow-300 p-3 text-center font-semibold text-gray-800 transition-colors hover:bg-yellow-400 hover:text-gray-900`}
+      }cursor-pointer md:min-w-[8rem] rounded-md border-2 border-solid bg-yellow-300 p-3 text-center font-semibold text-gray-800 transition-colors hover:bg-yellow-400 hover:text-gray-900 xs:min-w-[4rem] xs:text-sm md:text-base`}
       onClick={disabled ? undefined : handleClick}
       {...rest}
     >

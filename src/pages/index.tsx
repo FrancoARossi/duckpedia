@@ -30,13 +30,13 @@ const Home: NextPage = () => {
         alt="Google logo"
       />
       <div className="absolute inset-0 bg-black/[35%]" />
-      <div className="z-10 flex h-[80%] max-h-[600px] w-full max-w-md animate-fade-in-from-top flex-col justify-center gap-8 overflow-hidden rounded-xl bg-white/50 px-4 py-20 shadow-2xl backdrop-blur-sm">
+      <div className="z-10 flex h-[80%] max-h-[600px] max-w-md animate-fade-in-from-top flex-col justify-center gap-8 overflow-hidden rounded-xl bg-white/50 px-4 py-20 shadow-2xl backdrop-blur-sm xs:w-[80%] md:w-full">
         <div className="flex h-full flex-col justify-between">
           <div className="flex flex-col items-center gap-5">
             <h1 className="text-4xl font-semibold text-slate-900">
               Duckpedia 🦆
             </h1>
-            <p className="text-center text-xl text-zinc-900">
+            <p className="text-center text-zinc-900 xs:text-lg md:text-xl">
               Your go-to source for{" "}
               <a
                 target="_blank"

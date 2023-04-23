@@ -5,10 +5,11 @@ export default {
   theme: {
     extend: {
       animation: {
-        "fade-in-from-top": "fade-in-from-top 0.5s ease-out",
-        "fade-in-from-bottom": "fade-in-from-bottom 0.5s ease-out",
-        "fade-in-from-left": "fade-in-from-left 0.5s ease-out",
-        "fade-in-from-right": "fade-in-from-right 0.5s ease-out",
+        "fade-in-from-top": "fade-in-from-top 0.2s ease-out",
+        "fade-in-from-bottom": "fade-in-from-bottom 0.2s ease-out",
+        "fade-in-from-left": "fade-in-from-left 0.2s ease-out",
+        "fade-in-from-right": "fade-in-from-right 0.2s ease-out",
+        "opacity": "opacity 0.2s ease-out",
       },
       keyframes: {
         "fade-in-from-top": {
@@ -51,6 +52,14 @@ export default {
             transform: "translateX(0)",
           },
         },
+        "opacity": {
+          "0%": {
+            opacity: "0",
+          },
+          "100%": {
+            opacity: "1",
+          },
+        }
       },
       transitionProperty: {
         "backdrop-filter": "backdrop-filter",
@@ -61,6 +70,9 @@ export default {
       },
       maxWidth: {
         "8xl": "90rem", // 1440px
+      },
+      screens: {
+        'xs': '320px',
       },
     },
   },
