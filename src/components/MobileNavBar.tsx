@@ -172,7 +172,7 @@ export const MobileNavMenu: React.FC<{ onClose: () => void }> = ({
                       userNavItem.disabled
                         ? "pointer-events-none opacity-50"
                         : "opacity-80"
-                    } relative flex h-fit w-full cursor-pointer items-center rounded-lg p-1 text-white transition-all hover:scale-125 hover:bg-white/20 hover:opacity-100`}
+                    } relative flex h-fit w-full cursor-pointer items-center rounded-lg p-1 text-white/80 transition-all hover:scale-125 hover:bg-white/20 hover:opacity-100`}
                     href={userNavItem.href}
                   >
                     {userNavItem.icon}
@@ -182,7 +182,7 @@ export const MobileNavMenu: React.FC<{ onClose: () => void }> = ({
                   </a>
                 ))}
               </div>
-              <div className="flex cursor-default items-center rounded-lg p-1 text-white/80 transition-all hover:bg-white/20 hover:text-white">
+              <div className="flex cursor-default items-center rounded-lg p-1 transition-all hover:bg-white/20 hover:text-white">
                 <Image
                   src={session.user.image as string}
                   alt={session.user.name as string}
@@ -190,7 +190,7 @@ export const MobileNavMenu: React.FC<{ onClose: () => void }> = ({
                   height={30}
                   className="cursor-pointer rounded-full"
                 />
-                <span className="ml-2 animate-fade-in-from-left text-sm font-semibold text-white transition-all">
+                <span className="ml-2 animate-fade-in-from-left text-sm text-white/80 font-semibold transition-all">
                   {session.user.name}
                 </span>
               </div>
