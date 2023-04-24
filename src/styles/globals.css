@@ -9,6 +9,13 @@ body, #__next {
   background: #334155;
 }
 
+@supports(padding-bottom: constant(safe-area-inset-bottom)) or (padding-bottom: env(safe-area-inset-bottom)) {
+  body {
+    padding-bottom: constant(safe-area-inset-bottom); /* For iOS */
+    padding-bottom: env(safe-area-inset-bottom); /* For Android */
+  }
+}
+
 * {
   box-sizing: border-box;
   font-size: 16px;

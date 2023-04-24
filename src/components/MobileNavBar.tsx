@@ -73,7 +73,7 @@ const MobileNavBar: React.FC<{ onOpen: () => void }> = ({ onOpen }) => {
   return (
     <nav
       id="mobile-nav"
-      className="absolute left-0 top-0 z-50 flex h-16 w-screen animate-fade-in-from-top items-center justify-between bg-gray-800 px-8 shadow-[0px_0_10px_1px_rgba(0,0,0,0.66)] transition-all"
+      className="fixed left-0 top-0 z-50 flex h-16 w-screen animate-fade-in-from-top items-center justify-between bg-gray-800 px-8 shadow-[0px_0_10px_1px_rgba(0,0,0,0.66)] transition-all"
     >
       <div
         className={`flex h-[38px] ${
