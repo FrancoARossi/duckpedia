@@ -2,11 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
-body, #__next {
+body {
   height: 100vh;
-  width: 100vw;
+  width: 100%;
   overflow: hidden;
   background: #334155;
+}
+
+#__next {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
 }
 
 @supports(padding-bottom: constant(safe-area-inset-bottom)) or (padding-bottom: env(safe-area-inset-bottom)) {

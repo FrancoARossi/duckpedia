@@ -2,48 +2,9 @@ import { type Session } from "next-auth";
 import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import { useRef, useState } from "react";
-import {
-  GiDuck,
-  GiHamburgerMenu,
-  GiOutbackHat,
-  GiStonedSkull,
-  GiSpellBook,
-  GiExitDoor,
-} from "react-icons/gi";
+import { GiHamburgerMenu, GiExitDoor } from "react-icons/gi";
+import { NAV_ITEMS, USER_NAV_ITEMS } from "~/constants/navbar";
 import useOutsideClick from "~/hooks/useOutsideClick";
-
-const USER_NAV_ITEMS = [
-  {
-    icon: <GiDuck className="text-3xl" />,
-    id: "user_nav_profile",
-    label: "Profile",
-    href: "/profile",
-    disabled: true,
-  },
-];
-
-const NAV_ITEMS = [
-  {
-    id: "nav_claims",
-    icon: <GiOutbackHat className="text-3xl" />,
-    label: "Claims",
-    href: "/claims",
-  },
-  {
-    id: "nav_hall_of_shame",
-    icon: <GiStonedSkull className="text-3xl" />,
-    label: "Hall of Shame",
-    href: "/hall-of-shame",
-    disabled: true,
-  },
-  {
-    id: "nav_tips_n_tricks",
-    icon: <GiSpellBook className="text-3xl" />,
-    label: "Tips n' Tricks",
-    href: "https://duckgame.fandom.com/wiki/Category:Tips_and_Tricks",
-    target: "_blank",
-  },
-];
 
 const MobileNavBar: React.FC<{ onOpen: () => void }> = ({ onOpen }) => {
   const [logoExpand, setLogoExpand] = useState<boolean>(false);
@@ -147,7 +108,7 @@ export const MobileNavMenu: React.FC<{ onClose: () => void }> = ({
                   href={navItem.href}
                   target={navItem.target}
                 >
-                  {navItem.icon}
+                  <navItem.icon className="text-3xl" />
                   <span className="ml-2 animate-fade-in-from-left whitespace-nowrap text-sm font-semibold transition-all">
                     {navItem.label}
                   </span>
@@ -175,7 +136,7 @@ export const MobileNavMenu: React.FC<{ onClose: () => void }> = ({
                     } relative flex h-fit w-full cursor-pointer items-center rounded-lg p-1 text-white/80 transition-all hover:scale-125 hover:bg-white/20 hover:opacity-100`}
                     href={userNavItem.href}
                   >
-                    {userNavItem.icon}
+                    <userNavItem.icon className="text-3xl" />
                     <span className="ml-2 whitespace-nowrap text-sm font-semibold transition-all">
                       {userNavItem.label}
                     </span>
@@ -190,7 +151,7 @@ export const MobileNavMenu: React.FC<{ onClose: () => void }> = ({
                   height={30}
                   className="cursor-pointer rounded-full"
                 />
-                <span className="ml-2 animate-fade-in-from-left text-sm text-white/80 font-semibold transition-all">
+                <span className="ml-2 animate-fade-in-from-left text-sm font-semibold text-white/80 transition-all">
                   {session.user.name}
                 </span>
               </div>

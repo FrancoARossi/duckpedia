@@ -2,45 +2,9 @@ import type { Session } from "next-auth";
 import { useSession, signOut } from "next-auth/react";
 import Image from "next/image";
 import {
-  GiStonedSkull,
-  GiOutbackHat,
-  GiSpellBook,
   GiExitDoor,
-  GiDuck,
 } from "react-icons/gi";
-
-const USER_NAV_ITEMS = [
-  {
-    icon: <GiDuck className="text-3xl" />,
-    id: "user_nav_profile",
-    label: "Profile",
-    href: "/profile",
-    disabled: true,
-  },
-];
-
-const NAV_ITEMS = [
-  {
-    id: "nav_claims",
-    icon: <GiOutbackHat className="text-3xl" />,
-    label: "Claims",
-    href: "/claims",
-  },
-  {
-    id: "nav_hall_of_shame",
-    icon: <GiStonedSkull className="text-3xl" />,
-    label: "Hall of Shame",
-    href: "/hall-of-shame",
-    disabled: true,
-  },
-  {
-    id: "nav_tips_n_tricks",
-    icon: <GiSpellBook className="text-3xl" />,
-    label: "Tips n' Tricks",
-    href: "https://duckgame.fandom.com/wiki/Category:Tips_and_Tricks",
-    target: "_blank",
-  },
-];
+import { NAV_ITEMS, USER_NAV_ITEMS } from "~/constants/navbar";
 
 const NavBar = () => {
   const { data: session }: { data: Session | null } = useSession();
@@ -66,7 +30,7 @@ const NavBar = () => {
                   href={navItem.href}
                   target={navItem.target}
                 >
-                  {navItem.icon}
+                  <navItem.icon className="text-3xl"/>
                   <span className="ml-2 hidden animate-fade-in-from-left whitespace-nowrap text-sm font-semibold transition-all group-hover/nav:block">
                     {navItem.label}
                   </span>
@@ -94,7 +58,7 @@ const NavBar = () => {
                     } relative flex h-fit w-fit cursor-pointer items-center rounded-lg p-1 text-white transition-all hover:scale-125 hover:bg-white/20 hover:opacity-100 group-hover/nav:w-full`}
                     href={userNavItem.href}
                   >
-                    {userNavItem.icon}
+                    <userNavItem.icon className="text-3xl"/>
                     <span className="ml-2 hidden whitespace-nowrap text-sm font-semibold transition-all group-hover/nav:block">
                       {userNavItem.label}
                     </span>

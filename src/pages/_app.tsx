@@ -27,7 +27,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
   const isMobile = mediaMatch === "xs" || mediaMatch === "sm";
 
   const [mobileNavMenuOpen, setMobileNavMenuOpen] = useState<boolean>(false);
-
+  
   return (
     <>
       <Head>
@@ -61,7 +61,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
                 ) : (
                   <NavBar />
                 ))}
-              {!!session ? (
+              {session ? (
                 <MainLayout>
                   <Component {...pageProps} />
                 </MainLayout>
