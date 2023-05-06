@@ -1,9 +1,7 @@
 import type { Session } from "next-auth";
 import { useSession, signOut } from "next-auth/react";
 import Image from "next/image";
-import {
-  GiExitDoor,
-} from "react-icons/gi";
+import { GiExitDoor } from "react-icons/gi";
 import { NAV_ITEMS, USER_NAV_ITEMS } from "~/constants/navbar";
 
 const NavBar = () => {
@@ -26,11 +24,11 @@ const NavBar = () => {
                   key={navItem.id}
                   className={`${
                     navItem.disabled ? "pointer-events-none opacity-50 " : ""
-                  } relative flex h-fit w-fit cursor-pointer items-center rounded-lg p-1 text-white/80 transition-all hover:scale-125 hover:bg-white/20 hover:text-white group-hover/nav:w-full`}
+                  } relative flex h-fit w-fit cursor-pointer select-none items-center rounded-lg p-1 text-white/80 transition-all hover:scale-125 hover:bg-white/20 hover:text-white group-hover/nav:w-full`}
                   href={navItem.href}
                   target={navItem.target}
                 >
-                  <navItem.icon className="text-3xl"/>
+                  <navItem.icon className="text-3xl" />
                   <span className="ml-2 hidden animate-fade-in-from-left whitespace-nowrap text-sm font-semibold transition-all group-hover/nav:block">
                     {navItem.label}
                   </span>
@@ -55,10 +53,10 @@ const NavBar = () => {
                       userNavItem.disabled
                         ? "pointer-events-none opacity-50"
                         : "opacity-80"
-                    } relative flex h-fit w-fit cursor-pointer items-center rounded-lg p-1 text-white transition-all hover:scale-125 hover:bg-white/20 hover:opacity-100 group-hover/nav:w-full`}
+                    } relative flex h-fit w-fit cursor-pointer select-none items-center rounded-lg p-1 text-white transition-all hover:scale-125 hover:bg-white/20 hover:opacity-100 group-hover/nav:w-full`}
                     href={userNavItem.href}
                   >
-                    <userNavItem.icon className="text-3xl"/>
+                    <userNavItem.icon className="text-3xl" />
                     <span className="ml-2 hidden whitespace-nowrap text-sm font-semibold transition-all group-hover/nav:block">
                       {userNavItem.label}
                     </span>

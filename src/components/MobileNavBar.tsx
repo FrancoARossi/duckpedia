@@ -104,7 +104,7 @@ export const MobileNavMenu: React.FC<{ onClose: () => void }> = ({
                   key={navItem.id}
                   className={`${
                     navItem.disabled ? "pointer-events-none opacity-50 " : ""
-                  } relative flex h-fit w-full cursor-pointer items-center rounded-lg p-1 text-white/80 transition-all hover:scale-125 hover:bg-white/20 hover:text-white`}
+                  } relative flex h-fit w-full cursor-pointer select-none items-center rounded-lg p-1 text-white/80 transition-all hover:scale-125 hover:bg-white/20 hover:text-white`}
                   href={navItem.href}
                   target={navItem.target}
                 >
@@ -133,7 +133,7 @@ export const MobileNavMenu: React.FC<{ onClose: () => void }> = ({
                       userNavItem.disabled
                         ? "pointer-events-none opacity-50"
                         : "opacity-80"
-                    } relative flex h-fit w-full cursor-pointer items-center rounded-lg p-1 text-white/80 transition-all hover:scale-125 hover:bg-white/20 hover:opacity-100`}
+                    } relative flex h-fit w-full cursor-pointer select-none items-center rounded-lg p-1 text-white/80 transition-all hover:scale-125 hover:bg-white/20 hover:opacity-100`}
                     href={userNavItem.href}
                   >
                     <userNavItem.icon className="text-3xl" />
