@@ -122,7 +122,7 @@ const ClaimCardContent: React.FC<{ claim: ClaimWithHatAndUser }> = ({
             className="rounded-full"
           />
           <div className="flex flex-col justify-center gap-1">
-            <h3 className="font-extralight">{claim.claimedBy?.name}</h3>
+            <h3 className="font-light">{claim.claimedBy?.name}</h3>
             {claim.claimedBy?.profileName && (
               <p>{claim.claimedBy?.profileName}</p>
             )}
@@ -131,7 +131,7 @@ const ClaimCardContent: React.FC<{ claim: ClaimWithHatAndUser }> = ({
       </div>
       <div className="flex w-full flex-col items-center">
         <h3 className="font-extralight opacity-70">Claimed at</h3>
-        <h3 className="font-extralight">
+        <h3 className="font-light">
           {formatDate(claim.claimedAt as Date)}
         </h3>
       </div>

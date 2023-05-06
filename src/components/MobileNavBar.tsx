@@ -91,10 +91,10 @@ export const MobileNavMenu: React.FC<{ onClose: () => void }> = ({
   useOutsideClick(ref, handleClose);
 
   return (
-    <div className="absolute z-50 h-screen w-screen bg-gray-800/50 backdrop-blur-sm backdrop-filter">
+    <div className="absolute z-50 h-full w-screen bg-gray-800/50 backdrop-blur-sm backdrop-filter">
       <div
         ref={ref}
-        className="absolute right-0 top-0 h-screen w-48 animate-opacity bg-gray-800"
+        className="absolute right-0 top-0 h-full w-48 animate-opacity bg-gray-800"
       >
         {session && session.user && (
           <div className="relative flex h-full flex-col justify-between px-5 py-8">
