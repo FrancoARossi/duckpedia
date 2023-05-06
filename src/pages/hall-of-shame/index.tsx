@@ -1,9 +1,9 @@
-import { type GetServerSidePropsContext } from "next";
-import requireAuthentication from "~/utils/requireAuthentication";
+//import { type GetServerSidePropsContext } from "next";
+//import requireAuthentication from "~/utils/requireAuthentication";
 import Card from "~/components/Card";
 import { ImArrowUp } from "react-icons/im";
 import { GiBrokenSkull } from "react-icons/gi";
-import { useRouter } from "next/router";
+//import { useRouter } from "next/router";
 
 const HallOfShame = () => {
   return (
