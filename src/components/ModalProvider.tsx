@@ -46,7 +46,7 @@ const Modal = ({
     <div className="fixed z-10 h-full w-full backdrop-blur-[2px] backdrop-brightness-50 transition-backdrop-filter">
       <dialog className="inset-0 flex h-full max-h-96 max-w-lg flex-col items-center justify-center rounded-lg drop-shadow-xl xs:w-[80%] md:w-full">
         {!!title && (
-          <h1 className="text-center text-2xl font-extralight text-slate-700">
+          <h1 className="text-center text-2xl text-slate-700">
             {title}
           </h1>
         )}

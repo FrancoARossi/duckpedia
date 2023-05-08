@@ -59,6 +59,8 @@ model User {
   sessions      Session[]
   claim         Claim?
   profileName   String?   @unique
+  shames        Shame[]   @relation("ShamedUser")
+  shamedBy      Shame[]   @relation("ShamedByUser")
 }
 
 model Claim {
@@ -80,4 +82,17 @@ model Hat {
   note       String?
   unlockable Boolean  @default(false)
   claim      Claim?
+}
+
+model Shame {
+  id         String   @id @default(cuid())
+  createdAt  DateTime @default(now())
+  userId     String
+  shamedById String
+  note       String?
+  user       User     @relation("ShamedUser", fields: [userId], references: [id], onDelete: Cascade)
+  shamedBy   User     @relation("ShamedByUser", fields: [shamedById], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([shamedById])
 }

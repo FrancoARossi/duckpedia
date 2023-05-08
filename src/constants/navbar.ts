@@ -37,7 +37,6 @@ export const NAV_ITEMS: NavBarItem[] = [
     icon: GiStonedSkull,
     label: "Hall of Shame",
     href: "/hall-of-shame",
-    disabled: true,
   },
   {
     id: "nav_tips_n_tricks",
