@@ -13,6 +13,7 @@ import NavBar from "~/components/NavBar";
 import useMediaQuery from "~/hooks/useMediaQuery";
 import MobileNavBar, { MobileNavMenu } from "~/components/MobileNavBar";
 import { useState } from "react";
+import { Analytics } from '@vercel/analytics/react';
 
 const poppins = Poppins({
   weight: ["200", "400", "500", "700"],
@@ -72,6 +73,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
           </div>
         </ModalProvider>
       </SessionProvider>
+      <Analytics />
     </>
   );
 };
