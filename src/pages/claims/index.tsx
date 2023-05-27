@@ -21,6 +21,7 @@ import SkeletonLoader from "~/components/SkeletonLoader";
 import Card from "~/components/Card";
 import InputText from "~/components/InputText";
 import useDebounce from "~/hooks/useDebounce";
+import UserInfo from "~/components/UserInfo";
 
 const Claims: NextPage = () => {
   const { data: claims, isLoading } = api.claims.getAll.useQuery();
@@ -59,7 +60,7 @@ const Claims: NextPage = () => {
   };
 
   return (
-    <main className="flex xs:h-[90%] md:h-[80%] w-full max-w-8xl animate-fade-in-from-top flex-col gap-8">
+    <main className="flex w-full max-w-8xl animate-fade-in-from-top flex-col gap-8 xs:h-[90%] md:h-[80%]">
       <div className="flex flex-col gap-2 rounded-md bg-slate-50 xs:px-4 xs:py-2 md:px-8 md:py-4">
         <div className="flex flex-row items-center justify-between">
           <h1 className="font-extralight xs:text-xl xs:font-bold md:text-3xl">
@@ -113,27 +114,18 @@ const ClaimCardContent: React.FC<{ claim: ClaimWithHatAndUser }> = ({
     <div className="flex w-full flex-col gap-3">
       <div className="flex w-full flex-col items-center">
         <h3 className="font-extralight opacity-70">Claimed by</h3>
-        <div className="flex gap-2">
-          <Image
-            src={claim.claimedBy?.image as string}
-            alt={claim.claimedBy?.name as string}
-            width={30}
-            height={30}
-            className="rounded-full"
+        {claim.claimedBy && (
+          <UserInfo
+            imageUrl={claim.claimedBy.image}
+            name={claim.claimedBy.name || ""}
+            profileName={claim.claimedBy?.profileName}
+            className="justify-center"
           />
-          <div className="flex flex-col justify-center gap-1">
-            <h3 className="font-light">{claim.claimedBy?.name}</h3>
-            {claim.claimedBy?.profileName && (
-              <p>{claim.claimedBy?.profileName}</p>
-            )}
-          </div>
-        </div>
+        )}
       </div>
       <div className="flex w-full flex-col items-center">
         <h3 className="font-extralight opacity-70">Claimed at</h3>
-        <h3 className="font-light">
-          {formatDate(claim.claimedAt as Date)}
-        </h3>
+        <h3 className="font-light">{formatDate(claim.claimedAt as Date)}</h3>
       </div>
     </div>
   </div>

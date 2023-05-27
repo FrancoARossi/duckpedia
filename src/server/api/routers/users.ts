@@ -6,6 +6,11 @@ export const usersRouter = createTRPCRouter({
   }),
   getAllWithClaimAndShames: protectedProcedure.query(async ({ ctx }) => {
     const response = await ctx.prisma.user.findMany({
+      where: {
+        claim: {
+          isNot: null,
+        },
+      },
       include: {
         claim: {
           include: {
@@ -16,16 +21,14 @@ export const usersRouter = createTRPCRouter({
       },
     });
 
-    return response
-      .filter((user) => user.claim !== null)
-      .sort((a, b) => {
-        if (a.shames.length > b.shames.length) {
-          return 1;
-        }
-        if (a.shames.length < b.shames.length) {
-          return -1;
-        }
-        return 0;
-      });
+    return response.sort((a, b) => {
+      if (a.shames.length > b.shames.length) {
+        return -1;
+      }
+      if (a.shames.length < b.shames.length) {
+        return 1;
+      }
+      return 0;
+    });
   }),
 });

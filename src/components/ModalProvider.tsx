@@ -11,6 +11,7 @@ type ModalContextState = {
   title: string;
   onClose: () => void;
   content: ReactNode;
+  maxHeight?: string;
 };
 
 export const ModalProviderContext = createContext<{
@@ -24,6 +25,7 @@ const ModalProvider = ({ children }: { children: ReactNode }) => {
     open: false,
     onClose: () => null,
     content: <></>,
+    title: "",
   });
 
   return (
@@ -39,18 +41,20 @@ const Modal = ({
   title,
   onClose,
   content,
+  maxHeight,
 }: Partial<ModalContextState>) => {
   if (!open) return null;
 
   return (
     <div className="fixed z-10 h-full w-full backdrop-blur-[2px] backdrop-brightness-50 transition-backdrop-filter">
-      <dialog className="inset-0 flex h-full max-h-96 max-w-lg flex-col items-center justify-center rounded-lg drop-shadow-xl xs:w-[80%] md:w-full">
+      <dialog
+        style={{ maxHeight }}
+        className="inset-0 flex h-full min-h-[24rem] max-w-lg flex-col items-center overflow-hidden rounded-lg drop-shadow-xl xs:w-[80%] md:w-full"
+      >
         {!!title && (
-          <h1 className="text-center text-2xl text-slate-700">
-            {title}
-          </h1>
+          <h1 className="text-center text-2xl text-slate-700">{title}</h1>
         )}
-        <div className="h-full w-full">
+        <div className="mt-3 h-full w-full overflow-y-auto overflow-x-hidden">
           {!!onClose && (
             <svg
               fill="none"
