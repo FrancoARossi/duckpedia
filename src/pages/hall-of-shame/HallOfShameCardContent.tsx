@@ -13,7 +13,7 @@ const HallOfShameCardContent: React.FC<{
   place: number;
   disableShameButton?: boolean;
 }> = ({ user, place, disableShameButton }) => {
-  const [shameCount, setShameCount] = useState<number>(user?.shames?.length);
+  const [shameCount, setShameCount] = useState<number>(user.shames.length);
   const { setModalProps } = useContext(ModalProviderContext);
 
   const handleCloseModal = () => setModalProps({ open: false });

@@ -41,7 +41,7 @@ const HallOfShame: NextPage = () => {
             <SkeletonLoader className="h-24 w-full rounded" />
           </div>
         ))}
-      {users &&
+      {!!users?.length &&
         users.map((user, index) => (
           <Card
             key={user.id}
