@@ -1,5 +1,5 @@
 import { type MouseEvent, useContext, useState } from "react";
-import { type UserWithClaimAndHat } from ".";
+import { type UserWithClaimHatAndShames } from ".";
 import { ModalProviderContext } from "~/components/ModalProvider";
 import ShameModalContent from "./ShameModalContent";
 import { GiBrokenSkull, GiClown } from "react-icons/gi";
@@ -7,13 +7,14 @@ import Image from "next/image";
 import { ImArrowUp } from "react-icons/im";
 import ShameHistoryModalContent from "./ShameHistoryModalContent";
 import UserInfo from "~/components/UserInfo";
+import { twMerge } from "tailwind-merge";
 
 const HallOfShameCardContent: React.FC<{
-  user: UserWithClaimAndHat;
+  user: UserWithClaimHatAndShames;
   place: number;
   disableShameButton?: boolean;
 }> = ({ user, place, disableShameButton }) => {
-  const [shameCount, setShameCount] = useState<number>(user.shames.length);
+  const [shameCount, setShameCount] = useState<number>(user?.shames.length);
   const { setModalProps } = useContext(ModalProviderContext);
 
   const handleCloseModal = () => setModalProps({ open: false });
@@ -47,13 +48,20 @@ const HallOfShameCardContent: React.FC<{
       content: <ShameHistoryModalContent userId={user.id} />,
     });
 
+  const topTierColors = ["bg-red-300", "bg-orange-300", "bg-amber-300"];
+
   return (
     <div
       className="grid w-full cursor-pointer grid-cols-[100px_2fr_1fr_100px]"
       onClick={handleOpenShamesHistoryModal}
     >
       <div className="flex w-full items-center">
-        <div className="flex items-center gap-2 rounded-lg bg-slate-300 px-4 py-2 shadow-md">
+        <div
+          className={twMerge(
+            "flex items-center gap-2 rounded-lg bg-slate-300 px-4 py-2 shadow-md",
+            topTierColors[place - 1]
+          )}
+        >
           <GiClown className="text-xl" />
           <span>{place}</span>
         </div>

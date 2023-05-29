@@ -7,7 +7,7 @@ import type { Claim, Hat, Shame, User } from "@prisma/client";
 import HallOfShameCardContent from "./HallOfShameCardContent";
 import { useSession } from "next-auth/react";
 
-export type UserWithClaimAndHat = User & {
+export type UserWithClaimHatAndShames = User & {
   claim: Claim & {
     hat: Hat;
   };
@@ -48,7 +48,7 @@ const HallOfShame: NextPage = () => {
             className="w-full"
             content={
               <HallOfShameCardContent
-                user={user as UserWithClaimAndHat}
+                user={user as UserWithClaimHatAndShames}
                 place={index + 1}
                 disableShameButton={session?.user?.id === user.id}
               />
