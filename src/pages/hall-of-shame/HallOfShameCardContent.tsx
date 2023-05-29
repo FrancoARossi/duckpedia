@@ -31,7 +31,7 @@ const HallOfShameCardContent: React.FC<{
       maxHeight: "24rem",
       content: (
         <ShameModalContent
-          userId={user.id}
+          userId={user?.id}
           closeModal={handleCloseModal}
           updateShameCount={updateShameCount}
         />
@@ -45,7 +45,7 @@ const HallOfShameCardContent: React.FC<{
       title: "Shame History",
       onClose: handleCloseModal,
       maxHeight: "80vh",
-      content: <ShameHistoryModalContent userId={user.id} />,
+      content: <ShameHistoryModalContent userId={user?.id} />,
     });
 
   const topTierColors = ["bg-red-300", "bg-orange-300", "bg-amber-300"];
@@ -69,18 +69,18 @@ const HallOfShameCardContent: React.FC<{
       <div className="flex w-full items-center">
         <div className="relative h-full w-[40%]">
           <Image
-            src={user.claim.hat.imageUrl}
-            alt={user.claim.hat.name}
+            src={user?.claim.hat.imageUrl}
+            alt={user?.claim.hat.name}
             fill
             className="object-contain"
           />
         </div>
-        <span>{user.claim.hat.name}</span>
+        <span>{user?.claim.hat.name}</span>
       </div>
       <UserInfo
-        imageUrl={user.image}
-        name={user.name || ""}
-        profileName={user.profileName}
+        imageUrl={user?.image}
+        name={user?.name || ""}
+        profileName={user?.profileName}
       />
       <div className="flex w-full items-center">
         <div className="flex w-full flex-col items-center justify-center gap-2">
