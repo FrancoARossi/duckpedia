@@ -1,4 +1,5 @@
 import type { MouseEvent, ReactElement } from "react";
+import { twMerge } from "tailwind-merge";
 
 type CardProps = {
   className?: string;
@@ -17,7 +18,12 @@ const Card: React.FC<CardProps> = ({
   ...rest
 }) => (
   <div
-    className={`rounded-md bg-slate-50 px-6 py-3 shadow-lg transition-all${disableDefaultHover ? "" : " hover:scale-105 hover:shadow-2xl"} ${className}`}
+    className={twMerge(
+      `rounded-md bg-slate-50 px-6 py-3 shadow-lg transition-all${
+        disableDefaultHover ? "" : " hover:scale-105 hover:shadow-2xl"
+      }`,
+      className
+    )}
     onClick={onClick}
     {...rest}
   >

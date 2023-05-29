@@ -4,6 +4,7 @@ import {
   GiOutbackHat,
   GiStonedSkull,
   GiSpellBook,
+  GiDistressSignal,
 } from "react-icons/gi";
 
 type NavBarItem = {
@@ -37,6 +38,13 @@ export const NAV_ITEMS: NavBarItem[] = [
     icon: GiStonedSkull,
     label: "Hall of Shame",
     href: "/hall-of-shame",
+  },
+  {
+    id: "nav_duck_signal",
+    icon: GiDistressSignal,
+    label: "Duck Signal",
+    href: "/duck-signal",
+    disabled: true,
   },
   {
     id: "nav_tips_n_tricks",

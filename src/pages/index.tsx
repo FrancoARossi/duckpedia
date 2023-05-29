@@ -3,8 +3,8 @@ import type { Session } from "next-auth";
 import { getSession, signIn } from "next-auth/react";
 import Image, { type StaticImageData } from "next/image";
 import { useRouter } from "next/router";
-import googleLogo from "~/assets/btn_google_light_normal_ios.svg";
-import duckGameBg from "~/assets/duck_game_bg_1.jpg";
+import googleLogo from "~/assets/images/btn_google_light_normal_ios.svg";
+import duckGameBg from "~/assets/images/duck_game_bg_1.jpg";
 
 const Home: NextPage = () => {
   const router = useRouter();

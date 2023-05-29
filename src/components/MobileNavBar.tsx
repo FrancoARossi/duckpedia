@@ -31,6 +31,12 @@ const MobileNavBar: React.FC<{ onOpen: () => void }> = ({ onOpen }) => {
     if (MainLayoutElement) MainLayoutElement.style.borderRadius = "0.75rem"; // xl
   };
 
+  const playQuack = () => {
+    const audio = new Audio("quack.wav");
+    audio.volume = 0.5;
+    audio.play().catch((err) => console.error(err));
+  };
+
   return (
     <nav
       id="mobile-nav"
@@ -42,7 +48,7 @@ const MobileNavBar: React.FC<{ onOpen: () => void }> = ({ onOpen }) => {
         } cursor-default items-center justify-center gap-2 rounded-lg border border-white/50 p-3 text-xl`}
         onClick={() => setLogoExpand(!logoExpand)}
       >
-        <h1>🦆</h1>
+        <h1 className="selection:bg-transparent cursor-pointer" onClick={playQuack}>🦆</h1>
         <h1
           className={`${
             logoExpand ? "block" : "hidden"

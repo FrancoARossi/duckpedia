@@ -25,9 +25,9 @@ const UserInfo: React.FC<UserInfoProps> = ({
         className="rounded-full"
       />
     )}
-    <div className="flex flex-col justify-center gap-1">
+    <div className="flex flex-col justify-center items-start">
       <h3 className="font-light">{name}</h3>
-      {profileName && <p>{profileName}</p>}
+      {profileName && <p className="font-light text-black/50 leading-none">{profileName}</p>}
     </div>
   </div>
 );

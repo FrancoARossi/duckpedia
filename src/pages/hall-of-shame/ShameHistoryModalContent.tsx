@@ -21,7 +21,7 @@ const ShameHistoryModalContent = ({ userId }: { userId: string }) => {
         <Card key={shame.id} className="h-fit w-full" disableDefaultHover>
           <div className="flex flex-col gap-4">
             <p>{shame.note}</p>
-            <div className="flex justify-between">
+            <div className="flex justify-between items-center">
               <UserInfo
                 imageUrl={shame.shamedBy.image}
                 name={shame.shamedBy.name || ""}

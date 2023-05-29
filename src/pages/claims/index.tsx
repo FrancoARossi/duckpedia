@@ -75,7 +75,7 @@ const Claims: NextPage = () => {
           />
         </div>
       </div>
-      <section className="grid h-full w-full auto-rows-[300px] grid-cols-claims gap-x-4 gap-y-3 overflow-auto p-2 xs:justify-center sm:justify-normal">
+      <section className="flex h-full w-full flex-wrap gap-x-4 gap-y-3 overflow-auto p-2 xs:justify-center sm:justify-normal">
         {isLoading &&
           [...Array(5).keys()].map((i) => (
             <SkeletonLoader
@@ -87,7 +87,7 @@ const Claims: NextPage = () => {
           filterClaims(claims).map((claim) => (
             <Card
               key={claim.id}
-              className="md:max-w-[220px]"
+              className="flex h-80 flex-col items-center justify-center md:max-w-[220px]"
               content={<ClaimCardContent claim={claim} />}
             />
           ))}
@@ -99,7 +99,7 @@ const Claims: NextPage = () => {
 const ClaimCardContent: React.FC<{ claim: ClaimWithHatAndUser }> = ({
   claim,
 }) => (
-  <div className="flex h-full w-full flex-col items-center justify-center gap-2">
+  <div className="flex h-fit w-full flex-col items-center justify-center gap-2">
     <div className="flex flex-col items-center justify-center gap-2">
       <h2 className="text-xl font-semibold">{claim.hat.name}</h2>
       <div className="relative h-[100px] w-[196px]">
