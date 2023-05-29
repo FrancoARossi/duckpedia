@@ -21,40 +21,29 @@ const HallOfShame: NextPage = () => {
 
   return (
     <main className="flex w-full max-w-8xl animate-fade-in-from-top flex-col items-center gap-8 xs:h-[90%] md:h-[80%]">
-      <div className="grid w-full grid-cols-[100px_2fr_1fr_100px] px-6">
-        <div className="flex w-full justify-start">
-          <span className="font-semibold text-slate-800">Place</span>
-        </div>
-        <div className="flex w-full justify-start">
-          <span className="font-semibold text-slate-800">Hat</span>
-        </div>
-        <div className="flex w-full justify-start">
-          <span className="font-semibold text-slate-800">User</span>
-        </div>
-        <div className="flex w-full justify-center">
-          <span className="font-semibold text-slate-800">Shame</span>
-        </div>
-      </div>
-      {isLoading &&
-        [...Array(5).keys()].map((i) => (
-          <div key={`skeleton_shame_${i}`} className="w-full">
-            <SkeletonLoader className="h-24 w-full rounded" />
-          </div>
-        ))}
-      {!!users?.length &&
-        users.map((user, index) => (
-          <Card
-            key={user.id}
-            className="w-full"
-            content={
-              <HallOfShameCardContent
-                user={user as UserWithClaimHatAndShames}
-                place={index + 1}
-                disableShameButton={session?.user?.id === user.id}
-              />
-            }
-          />
-        ))}
+      <section className="flex h-full w-full flex-wrap gap-x-4 gap-y-3 overflow-auto p-2 xs:justify-center sm:justify-normal">
+        {isLoading &&
+          [...Array(5).keys()].map((i) => (
+            <SkeletonLoader
+              key={`skeleton_shame_${i}`}
+              className="rounded-md"
+            />
+          ))}
+        {!!users &&
+          users.map((user, index) => (
+            <Card
+              key={user.id}
+              className="relative flex h-80 flex-col items-center justify-center md:max-w-[220px]"
+              content={
+                <HallOfShameCardContent
+                  user={user as UserWithClaimHatAndShames}
+                  place={index + 1}
+                  disableShameButton={session?.user?.id === user.id}
+                />
+              }
+            />
+          ))}
+      </section>
     </main>
   );
 };
