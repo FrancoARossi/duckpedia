@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { twMerge } from "tailwind-merge";
 
 type UserInfoProps = {
   imageUrl: string | null;
@@ -14,7 +15,10 @@ const UserInfo: React.FC<UserInfoProps> = ({
   className = "",
 }) => (
   <div
-    className={`flex w-full items-center gap-2 ${className}`}
+    className={twMerge(
+      "flex h-fit w-fit items-center gap-2 rounded-full bg-cyan-300 px-3 py-1 shadow-sm",
+      className
+    )}
   >
     {imageUrl && (
       <Image
@@ -25,9 +29,11 @@ const UserInfo: React.FC<UserInfoProps> = ({
         className="rounded-full"
       />
     )}
-    <div className="flex flex-col justify-center items-start">
+    <div className="flex flex-col items-start justify-center">
       <h3 className="font-light">{name}</h3>
-      {profileName && <p className="font-light text-black/50 leading-none">{profileName}</p>}
+      {profileName && (
+        <p className="font-light leading-none text-black/50">{profileName}</p>
+      )}
     </div>
   </div>
 );

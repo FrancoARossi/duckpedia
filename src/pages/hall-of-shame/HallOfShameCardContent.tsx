@@ -77,11 +77,13 @@ const HallOfShameCardContent: React.FC<{
         </div>
         <span>{user?.claim.hat.name}</span>
       </div>
-      <UserInfo
-        imageUrl={user?.image}
-        name={user?.name || ""}
-        profileName={user?.profileName}
-      />
+      <div className="flex h-full w-full items-center">
+        <UserInfo
+          imageUrl={user?.image}
+          name={user?.name || ""}
+          profileName={user?.profileName}
+        />
+      </div>
       <div className="flex w-full items-center">
         <div className="flex w-full flex-col items-center justify-center gap-2">
           <div
