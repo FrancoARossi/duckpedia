@@ -26,7 +26,7 @@ const HallOfShameCardContent: React.FC<{
     e.stopPropagation();
     setModalProps({
       open: true,
-      title: "SHAME ON YOU!",
+      title: `Shame on you ${user?.claim.hat.name}!`,
       onClose: handleCloseModal,
       maxHeight: "24rem",
       content: (
@@ -42,7 +42,7 @@ const HallOfShameCardContent: React.FC<{
   const handleOpenShamesHistoryModal = () =>
     setModalProps({
       open: true,
-      title: "Shame History",
+      title: `${user?.claim.hat.name}'s shame history`,
       onClose: handleCloseModal,
       maxHeight: "80vh",
       content: <ShameHistoryModalContent userId={user?.id} />,
