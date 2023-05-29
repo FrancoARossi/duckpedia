@@ -28,7 +28,7 @@ const HallOfShameCardContent: React.FC<{
       open: true,
       title: `Shame on you ${user?.claim.hat.name}!`,
       onClose: handleCloseModal,
-      maxHeight: "24rem",
+      className: "max-h-10",
       content: (
         <ShameModalContent
           userId={user?.id}
@@ -44,7 +44,7 @@ const HallOfShameCardContent: React.FC<{
       open: true,
       title: `${user?.claim.hat.name}'s shame history`,
       onClose: handleCloseModal,
-      maxHeight: "80vh",
+      className: "max-h-[80vh]",
       content: <ShameHistoryModalContent userId={user?.id} />,
     });
 

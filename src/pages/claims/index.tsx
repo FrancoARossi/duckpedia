@@ -41,6 +41,7 @@ const Claims: NextPage = () => {
       open: true,
       title: "Choose wisely...",
       onClose: handleCloseClaimModal,
+      className: "h-10",
       content: <ClaimModalContent closeModal={handleCloseClaimModal} />,
     });
 

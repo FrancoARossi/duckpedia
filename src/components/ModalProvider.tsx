@@ -5,13 +5,14 @@ import {
   createContext,
   useState,
 } from "react";
+import { twMerge } from "tailwind-merge";
 
 type ModalContextState = {
   open: boolean;
   title: string;
   onClose: () => void;
   content: ReactNode;
-  maxHeight?: string;
+  className?: string;
 };
 
 export const ModalProviderContext = createContext<{
@@ -41,15 +42,17 @@ const Modal = ({
   title,
   onClose,
   content,
-  maxHeight,
+  className,
 }: Partial<ModalContextState>) => {
   if (!open) return null;
 
   return (
     <div className="fixed z-10 h-full w-full backdrop-blur-[2px] backdrop-brightness-50 transition-backdrop-filter">
       <dialog
-        style={{ maxHeight }}
-        className="inset-0 flex h-full min-h-[24rem] max-w-lg flex-col items-center overflow-hidden rounded-lg drop-shadow-xl xs:w-[80%] md:w-full"
+        className={twMerge(
+          "inset-0 flex h-full min-h-[24rem] max-w-lg flex-col items-center overflow-hidden rounded-lg drop-shadow-xl xs:w-[90%] md:w-full",
+          className
+        )}
       >
         {!!title && (
           <h1 className="text-center text-2xl text-slate-700">{title}</h1>
