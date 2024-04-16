@@ -48,9 +48,8 @@ export const authOptions: NextAuthOptions = {
     signIn: async ({ account, profile }): Promise<boolean> => {
       if (account?.provider === "google") {
         return Promise.resolve(
-          (profile &&
-            profile.email_verified &&
-            profile.email?.endsWith("@sirius.com.ar")) as boolean
+          (profile?.email_verified &&
+            profile?.email?.endsWith("@sirius.com.ar")) as boolean
         );
       }
       // For now only allow Google sign in
