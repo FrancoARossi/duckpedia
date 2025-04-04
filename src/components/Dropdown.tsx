@@ -20,15 +20,17 @@ const Dropdown = ({ onChange, options, selected }: DropdownProps) => {
     }
   });
 
-  const handleOpen = () => setIsOpen(true);
-  const handleClose = () => setIsOpen(false);
+  const toggleOpen = (e: React.MouseEvent<HTMLElement>) => {
+    e.stopPropagation();
+    setIsOpen((prev) => !prev);
+  };
 
   return (
     <div className="relative w-[60%]">
       {!!options && !!selected && (
         <div
           className="focus:shadow-outline flex h-20 w-full cursor-pointer justify-start gap-2 rounded border border-gray-400 bg-white px-4 py-2 pr-8 leading-tight shadow hover:border-gray-500 focus:outline-none"
-          onClick={isOpen ? handleClose : handleOpen}
+          onClick={toggleOpen}
         >
           {!!selected.imageUrl && (
             <div className="relative h-full w-[60%]">
@@ -48,16 +50,14 @@ const Dropdown = ({ onChange, options, selected }: DropdownProps) => {
           ref={ref}
           tabIndex={-1}
           role="listbox"
-          aria-labelledby="listbox-label"
-          aria-activedescendant="listbox-item-3"
           className="absolute z-10 mt-1 max-h-48 w-full animate-[fade-in_200ms_ease-out] overflow-auto rounded-md bg-white text-base leading-6 shadow-lg focus:outline-none sm:text-sm sm:leading-5"
         >
           {options?.map((option) => {
             const isClaimed = !!(option as ClaimedHat).claim;
 
-            const handleHatSelect = () => {
+            const handleHatSelect = (e: React.MouseEvent<HTMLElement>) => {
               onChange(option);
-              handleClose();
+              toggleOpen(e);
             };
 
             return (

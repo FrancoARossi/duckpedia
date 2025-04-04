@@ -125,7 +125,7 @@ const ClaimCardContent: React.FC<{ claim: ClaimWithHatAndUser }> = ({
         )}
       </div>
       <div className="flex w-full flex-col items-center">
-        <h3 className="font-extralight opacity-70">Claimed at</h3>
+        <h3 className="font-extralight opacity-70">Claim date</h3>
         <h3 className="font-light">{formatDate(claim.claimedAt as Date)}</h3>
       </div>
     </div>
@@ -182,7 +182,7 @@ const ClaimModalContent = ({ closeModal }: { closeModal: () => void }) => {
 
   useEffect(() => {
     if (hats && hats.length > 0) {
-      setSelectedHat(hats.find((hat) => !hat.claim) || null);
+      setSelectedHat(hats.find((hat: Hat) => !hat.claim) || null);
     }
   }, [hats]);
 
