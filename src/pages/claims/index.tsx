@@ -182,7 +182,7 @@ const ClaimModalContent = ({ closeModal }: { closeModal: () => void }) => {
 
   useEffect(() => {
     if (hats && hats.length > 0) {
-      setSelectedHat(hats.find((hat: Hat) => !hat.claim) || null);
+      setSelectedHat(hats.find((hat) => !hat.claim) || null);
     }
   }, [hats]);
 
